@@ -1,0 +1,142 @@
+
+/* =========================================
+   MECÁNICA DE FLUIDOS
+   Estilos personalizados
+   ========================================= */
+
+/* Estilos generales */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(
+        135deg,
+        #D6B08C 0%,
+        #F6F1E6 60%,
+        #D6B08C 100%
+    );
+    min-height: 100vh;
+    .datos{
+        text-align: center;
+    }
+
+    .materia{
+        font-family: 'Muthiara';
+        font-size: 100px;
+        background: -webkit-linear-gradient(#7A4F34, #3B2A20);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: #3B2A20 ;
+    }
+
+    .objetivo1{
+        font-family: 'Sweet';
+        font-size: 30px;
+        color: #7A4F34;
+        text-align: center;
+    }
+
+    .objetivo2{
+        font-family: 'Sweet';
+        font-size: 25px;
+        color: #B88A5A;
+        text-align: center;
+    }
+
+    .escuela{
+        font-family: 'Coffee';
+        font-size: 20px;
+        text-align: center;
+        color: #7A4F34;
+    }
+
+
+    .grupo{
+        font-family: 'Coffee';
+        font-size: 20px;
+        text-align: center;
+        color: #7A4F34;
+    }
+
+    .alumno{
+        font-family: 'Coffee';
+        font-size: 20px;
+        line-height: 6px;
+        text-align: left;
+        color: #7A4F34;
+    }
+
+    .matricula{
+        font-family: 'Coffee';
+        font-size: 20px;
+        text-align: right;
+        color: #7A4F34;
+    }
+
+    .navegacion{
+        font-family: 'Coffee';
+        font-size: 30px;
+        color: #D6B08C;
+    }
+
+    .TEXT{
+        color: #3B2A20;
+    }
+    .TEXT1{
+        color: #F6F1E6;
+        background-color: #B88A5A;
+    }
+    .TEXT3{
+        background-color: #D6B08C;
+    }
+} 
+
+/* Paneles con efecto de vidrio */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Pestaña seleccionada */
+.tab-btn.active {
+    font-family: 'Coffee';
+    font-size: 20px;
+    background-color: #D6B08C;
+    color: #F6F1E6;
+    box-shadow: 0 4px 12px #B88A5A;
+}
+
+/* Área de simulación */
+canvas {
+    touch-action: none;
+}
+
+/*Fuentes de letras*/
+@font-face {
+            font-family: 'Muthiara';
+            src: url('./fonts/Muthiara.otf');
+        }
+
+@font-face {
+    font-family: 'Coffee';
+    src: url('./fonts/Coffee.ttf');
+}
+
+@font-face {
+    font-family: 'Sweet';
+    src: url('./fonts/SweetCreamy.otf');
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 640px) {
+    .glass-panel {
+        padding: 1rem;
+    }
+
+    #canvas-hint {
+        font-size: 10px;
+    }
+
+    #simCanvas {
+        min-height: 250px;
+    }
+}

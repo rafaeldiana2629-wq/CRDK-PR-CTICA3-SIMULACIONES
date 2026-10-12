@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Nuestro CSS -->
+    <link rel="stylesheet" href="estilos.css">
+    <title>Fenómenos de Transporte I - Simulaciones</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- MathJax for rendering math formulas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Tailwind CSS -->
+    <!-- Configuración de Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        fluid: {
+                            50: '#F6F1E6',
+                            100: '#E8DCC3',
+                            500: '#D6B08C',
+                            600: '#B88A5A',
+                            700: '#7A4F34',
+                            900: '#3B2A20',
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+
+</head>
+<body class="text-slate-800 pb-12">
+    <header class="datos max-w-7xl mx-auto pt-8 px-4 sm:px-6 lg:px-8 text-white mb-8">
+         <p class="objetivo1 font-semibold">
+            Práctica 3: Simulaciones
+        </p>
+        <h1 class="materia font-extrabold">
+            Mecánica de Fluidos
+        </h1>
+        <p class="objetivo2 font-semibold">
+            Objetivo: Explora, simula y calcula las 6 ecuaciones fundamentales que rigen el comportamiento de los fluidos.
+        </p>
+        <div class="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md px-36 py-1 rounded-full border border-white/20 mb-4">
+            <i class="fa-solid font-waves text-xl"></i>
+            <span class="escuela font-semibold ">
+                <h2>INSTITUTO TECNOLÓGICO SUPERIOR DE ACAYUCAN</h2>
+                <span class="grupo">Grupo:501A</span>
+                <ul class="lista-integrantes">
+                    <li>
+                        <span class="alumno">Cruz Rafael Diana Karoly</span>
+                        <span class="matricula"> 240B0063</span>
+                    </li>
+                    <li>
+                        <span class="alumno">López Waldo Evelyn Belén</span>
+                        <span class="matricula"> 240B0080</span>
+                    </li>
+                    <li>
+                        <span class="alumno">Sánchez Domínguez Emiliano Edén</span>
+                        <span class="matricula"> 240B0749</span>
+                    </li>
+                </ul>
+            </span>
+        </div>
+    </header>
+
+    <main class="navegacion max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav class="flex flex-wrap justify-center gap-2 mb-8 bg-slate-900/40 p-2 rounded-2xl backdrop-blur-md border border-white/10" id="tabs-container">
+            <button onclick="switchTab(1)" id="tab-1" class="tab-btn active px-4 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-200 hover:text-white">
+                <i class="fa-solid fa-gauge-high"></i> 1. Presión Hidrostática
+            </button>
+            <button onclick="switchTab(2)" id="tab-2" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-200 hover:text-white">
+                <i class="fa-solid fa-anchor"></i> 2. Empuje (Arquímedes)
+            </button>
+            <button onclick="switchTab(3)" id="tab-3" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-200 hover:text-white">
+                <i class="fa-solid fa-truck-monster"></i> 3. Ley de Pascal
+            </button>
+            <button onclick="switchTab(4)" id="tab-4" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-200 hover:text-white">
+                <i class="fa-solid fa-water"></i> 4. Continuidad
+            </button>
+            <button onclick="switchTab(5)" id="tab-5" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-200 hover:text-white">
+                <i class="fa-solid fa-wind"></i> 5. Bernoulli
+            </button>
+            <button onclick="switchTab(6)" id="tab-6" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-200 hover:text-white">
+                <i class="fa-solid fa-droplet"></i> 6. Ley de Stokes
+            </button>
+        </nav>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left Side: Interactive Simulator & Theory (7 cols) -->
+            <div class="lg:col-span-7 flex flex-col gap-6">
+                <!-- Simulation Card -->
+                <div class="glass-panel rounded-3xl p-6 shadow-2xl relative overflow-hidden flex flex-col">
+                    <div class="flex items-center justify-between mb-4 border-b border-slate-200/60 pb-3">
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2" id="sim-title">
+                            <i class="TEXT fa-solid fa-flask text-fluid-600"></i> Simulación Interactiva
+                        </h2>
+                        <span class="text-xs font-semibold px-3 py-1 bg-fluid-100 text-fluid-700 rounded-full" id="sim-badge">Visualización Dinámica</span>
+                    </div>
+
+                    <!-- Canvas Area -->
+                    <div class="w-full h-80 bg-slate-900 rounded-2xl overflow-hidden relative shadow-inner flex items-center justify-center">
+                        <canvas id="simCanvas" class="w-full h-full block"></canvas>
+                        <!-- Interactive control helper -->
+                        <div class="absolute bottom-3 left-3 bg-slate-900/80 backdrop-blur text-white text-xs px-3 py-1.5 rounded-lg border border-slate-700/50 flex items-center gap-2">
+                            <i class=" fa-solid fa-circle-info"></i>
+                            <span id="canvas-hint">Ajusta los parámetros para observar el comportamiento en vivo.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theoretical Explanation Card -->
+                <div class="glass-panel rounded-3xl p-6 shadow-2xl">
+                    <h3 class="TEXT text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-book-open text-fluid-600"></i> Explicación Teórica
+                    </h3>
+                    <div id="theory-content" class="text-slate-600 text-sm leading-relaxed space-y-3">
+                        <!-- Dynamic Content Loaded via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Dynamic Calculator (5 cols) -->
+            <div class="lg:col-span-5">
+                <div class="glass-panel rounded-3xl p-6 shadow-2xl sticky top-6">
+                    <div class="flex items-center justify-between mb-6 border-b border-slate-200/60 pb-3">
+                        <h2 class="TEXT text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-calculator text-fluid-600"></i> Calculadora
+                        </h2>
+                        <div class="TEXT text-xs text-slate-500 font-medium">Resolución Dinámica</div>
+                    </div>
+
+                    <!-- Target variable selector -->
+                    <div class="TEXT3 mb-5 bg-fluid-50 p-3 rounded-xl border border-fluid-100">
+                        <label class="TEXT block text-xs font-bold text-fluid-900 uppercase tracking-wider mb-2">Variable a Calcular:</label>
+                        <select id="targetVar" onchange="updateCalculatorInputs()" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm font-medium text-slate-800 focus:ring-2 focus:ring-fluid-500 focus:outline-none shadow-sm">
+                            <!-- Options dynamically populated -->
+                        </select>
+                    </div>
+
+                    <!-- Dynamic Input Fields -->
+                    <div id="inputs-container" class="space-y-4 mb-6">
+                        <!-- Dynamic Inputs Loaded via JS -->
+                    </div>
+
+                    <!-- Calculate Button -->
+                    <button onclick="calculateResult()" class="TEXT1 w-full from-fluid-600 hover:from-fluid-700 hover:to-cyan-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg transition-all transform active:scale-95 flex items-center justify-center gap-2">
+                        <i class=" fa-solid fa-bolt"></i> Calcular Resultado
+                    </button>
+
+                    <!-- Result Box -->
+                    <div id="result-box" class="mt-6 p-4 bg-slate-900 text-white rounded-2xl border border-slate-700 hidden">
+                        <div class="text-xs uppercase text-cyan-400 font-bold tracking-wider mb-1">Resultado:</div>
+                        <div id="result-value" class="text-2xl font-black text-white">---</div>
+                        <div id="result-step" class="text-xs text-slate-400 mt-2 border-t border-slate-800 pt-2 font-mono">---</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
